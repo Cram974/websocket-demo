@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Socket.io</title>
+    </head>
+
+    <body>
+        <h1>Communication with socket.io !</h1>
+
+        <p><input type="button" value="Say Hello" id="poke" /></p>
+
+
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io.connect('http://localhost:8080');
+
+            // Username
+            var username = prompt('Username?');
+            // send username with the 'new' event
+            socket.emit('new', username);
+
+            // Prompt new messages from server
+            socket.on('message', function(message) {
+                alert('Server: ' + message);
+            })
+
+            // Send hello world on poke button click
+            $('#poke').click(function () {
+                socket.emit('message', 'Hello world!');
+            })
+        </script>
+    </body>
+</html>
